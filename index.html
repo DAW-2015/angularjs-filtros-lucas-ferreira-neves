@@ -7,13 +7,21 @@
     <script src="app.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <style type="text/css">
+      td{
+        padding: 1px;
+        border: 1px solid;
+      }
+    </style>
   </head>
   <body ng-app="FuncionariosApp" ng-controller="FuncionariosController as funcCtrl">
 
     <input type="text" ng-model="searchInput">
+    <input type="number" ng-model="searchInput2">
 
     <table>
-      <th>
+      <thead>
         <td>
           <b>Nome</b>
         </td>
@@ -29,24 +37,26 @@
         <td>
           <b>Salário</b>
         </td>
-      </th>
-      <tr ng-repeat="employee in funcCtrl.employees">
+      </thead>
+      <tbody>
+      <tr ng-repeat="employee in funcCtrl.employees | filter: searchInput | orderBy: 'name' | limitTo: searchInput2">
         <td>
           {{employee.name}}
         </td>
         <td>
-          {{employee.cpf}}
+          {{employee.cpf | cpf}}
         </td>
         <td>
           {{employee.email}}
         </td>
         <td>
-          {{employee.phone}}
+          {{employee.phone | tel}}
         </td>
         <td>
-          {{employee.salary}}
+          {{employee.salary | currency}}
         </td>
       </tr>
+    </tbody>
     </table>
 
   </body>
